@@ -1,0 +1,78 @@
+networks:
+  ai_network:
+    driver: bridge
+
+services:
+  # Next.js 前端应用
+  agent_app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: agent_app
+    restart: always
+    env_file:
+      - .env.docker
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+    volumes:
+      - app_logs:/app/logs
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - ai-network
+
+  # 后端服务
+  mysql:
+    image: mysql:8.0
+    container_name: ai_mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: ai_agent
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - ai_network
+
+  chroma-server:
+    image: chromadb/chroma:latest
+    container_name: ai_chroma
+    ports:
+      - "8100:8000"
+    environment:
+      - CHROMA_SERVER_AUTHN_PROVIDER=chromadb.auth.token_authn.TokenAuthenticationServerProvider
+      - CHROMA_SERVER_AUTHN_CREDENTIALS=admin
+    restart: always
+    volumes:
+      - chroma_data:/chroma/chroma
+    networks:
+      - ai_network
+
+  # nginx
+  nginx:
+    image: nginx:alpine
+    container_name: ai_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./conf.d:/etc/nginx/conf.d:ro
+    restart: always
+    depends_on:
+      - app
+    networks:
+      - ai_network
+
+volumes:
+  mysql_data:
+  chroma_data:
+  app_logs:
+

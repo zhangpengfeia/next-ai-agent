@@ -1,0 +1,81 @@
+# ==================== 操作系统 ====================
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ==================== 前端通用 ====================
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn
+
+# 构建输出
+dist/
+build/
+out/
+.next/
+.nuxt/
+.output/
+
+# 前端框架
+.parcel-cache/
+.vite/
+.vuepress/dist/
+
+# 依赖锁定（可选，根据团队规范决定）
+# package-lock.json
+# yarn.lock
+
+# ==================== 后端通用 ====================
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+.env
+.env.docker
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# ==================== 数据库 ====================
+*.db
+*.sqlite
+*.sqlite3
+*.dump
+.env
+
+# ==================== 日志文件 ====================
+logs/
+*.log
+log/
+
+# ==================== IDE 和编辑器 ====================
+.idea
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+.project
+.settings/
+
+# ==================== 测试和覆盖率 ====================
+coverage/
+.nyc_output/
+test-results/
+*.test.js.snap
+
+# ==================== 临时文件 ====================
+tmp/
+temp/
+.cache/
