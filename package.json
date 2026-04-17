@@ -7,7 +7,7 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint:eslint": "eslint . --fix \"src/**/*.{js,ts,tsx,html}\"",
-    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "lint:lint-staged": "lint-staged -c .husky/lintstagedrc.cjs",
     "ts:check": "tsc --noEmit",
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
