@@ -1,5 +1,5 @@
 # 使用 Node.js 22 作为基础镜像
-FROM node:22.8.0-alpine AS base
+FROM node:22.12.0-alpine AS base
 
 # 安装依赖阶段
 FROM base AS deps
