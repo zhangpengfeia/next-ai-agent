@@ -8,7 +8,7 @@ import path from 'path'
 import fs from 'fs/promises'
 import crypto from 'crypto'
 import { checkFileMd5Exists, saveFileMd5 } from '@/services/server/agent/chrome'
-import { PDFParse } from 'pdf-parse'
+import { PDFLoader } from '@langchain/community/document_loaders/fs/pdf'
 
 // ====================== 配置 ======================
 const CHROMA_CONFIG = {
@@ -41,25 +41,6 @@ class FileLoader {
       return []
     }
   }
-
-  /**
-   * 加载 PDF 文件（需要安装 pdf-parse）
-   */
-  async loadPdf(filePath: string): Promise<Document[]> {
-    try {
-      const data = new PDFParse({ url: filePath })
-      const result = await data.getText()
-      return [
-        new Document({
-          pageContent: result.text,
-          metadata: { source: filePath, type: 'pdf' }
-        })
-      ]
-    } catch (error) {
-      logger.error(`加载 PDF 文件失败 ${filePath}: ${error}`)
-      return []
-    }
-  }
   /**
    * 根据文件类型加载
    */
@@ -67,7 +48,10 @@ class FileLoader {
     if (filePath.endsWith('.txt')) {
       return this.loadTxt(filePath)
     } else if (filePath.endsWith('.pdf')) {
-      return this.loadPdf(filePath)
+      const loader = new PDFLoader(filePath, {
+        splitPages: false // 不按页拆分，和你之前逻辑一致
+      })
+      return loader.load()
     }
     return []
   }
