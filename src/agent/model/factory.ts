@@ -43,11 +43,11 @@ export class ChatModelFactory extends BaseModelFactory {
 export class EmbeddingFactory extends BaseModelFactory {
   generator(): Embeddings {
     const apiKey = process.env.DASHSCOPE_API_KEY;
-    
+
     if (!apiKey) {
       throw new Error('DASHSCOPE_API_KEY 环境变量未配置');
     }
-    
+
     return new AlibabaTongyiEmbeddings({
       modelName: ragConfig.embedding_model_name,
       apiKey: apiKey,

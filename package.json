@@ -10,7 +10,8 @@
     "db:generate": "prisma generate",
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "prepare": "husky"
   },
   "dependencies": {
     "@ant-design/icons": "^6.1.1",
@@ -50,9 +51,20 @@
     "@types/uuid": "^11.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
+    "husky": "^9.1.7",
     "less": "^4.6.4",
+    "lint-staged": "^16.4.0",
+    "prettier": "^3.8.3",
     "prisma": "^7.7.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   }
 }
