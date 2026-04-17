@@ -21,6 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV DASHSCOPE_API_KEY=build-time-dummy-key
 RUN npm install -g pnpm && pnpm build
 
 # 生产运行阶段
