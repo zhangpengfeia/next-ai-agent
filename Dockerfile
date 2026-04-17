@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml* ./
 
 # 👉 修复：不使用锁文件，直接安装（最稳妥）
-RUN pnpm install -g pnpm && \
+RUN npm install -g pnpm && \
     pnpm config set registry https://registry.npmmirror.com/ && \
     pnpm i
 
@@ -21,8 +21,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 ENV NEXT_TELEMETRY_DISABLED=1
-ENV DASHSCOPE_API_KEY=build-time-dummy-key
-RUN pnpm install -g pnpm && pnpm build
+RUN npm install -g pnpm && pnpm build
 
 # 生产运行阶段
 FROM base AS runner
