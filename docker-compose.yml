@@ -67,7 +67,7 @@ services:
       - ./conf.d:/etc/nginx/conf.d:ro
     restart: always
     depends_on:
-      - app
+      - agent_app
     networks:
       - ai_network
 
